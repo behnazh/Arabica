@@ -1,0 +1,9 @@
+utils = require('./core/utils')
+
+ToDoList =
+  view : (dom, callback) ->
+    utils.bind(dom, '.item', (node) ->
+        node.innerHtml = "thing one"
+        node
+
+    )

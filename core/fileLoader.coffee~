@@ -1,0 +1,14 @@
+fs = require 'fs'
+jsdom = require 'jsdom'
+
+jsOpt =
+  features :
+    QuerySelector : true
+
+exports.load (filename, callback) ->
+  fs.readFile(filename, 'ascii', (errors, file) ->
+    if errors
+      callback errors
+    else
+      dom = jsdom.jsdom(file, null, jsOpt)
+      callback(null, dom)

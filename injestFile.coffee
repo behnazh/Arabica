@@ -1,0 +1,14 @@
+jsdom = require 'jsdom'
+fs = require 'fs'
+
+options =
+  features :
+    QuerySelector : true
+
+raw = fs.readFileSync('templates/index.html', 'ascii')
+
+win = jsdom.jsdom(raw, null, options)
+
+console.log win.querySelectorAll('div').length
+
+console.log win.querySelector('div').querySelector

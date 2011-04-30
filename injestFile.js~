@@ -1,0 +1,11 @@
+var jsdom = require('jsdom').jsdom;
+var fs = require('fs');
+
+var raw =fs.readFileSync('templates/index,html');
+
+
+var doc = jsdom(raw, null, {
+		features : {
+		    QuerySelector : true		   
+		}
+});

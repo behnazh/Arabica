@@ -1,0 +1,53 @@
+fs = require 'fs'
+jsdom = require 'jsdom'
+
+jsOpt =
+  features :
+    QuerySelector : true
+
+doc = jsdom.jsdom('<html><head></head><body></body></html>', null, jsOpt).document
+
+exports.load = (filename, callback) ->
+  fs.readFile(filename, 'ascii', (errors, file) ->
+    if errors
+      callback errors
+    else
+      dom = jsdom.jsdom(file, null, jsOpt)
+
+      frags = getFragments(dom)
+
+      callback(null, dom)
+  )
+
+processFragment = (frag) ->
+  controllerName = getControllerName(frag)
+  actionName = getActionName(frag)
+  controller = getController(controllerName)
+  results = controller[actionName](frag)
+
+  frag.innerHTML = getHtml(results)
+  frag
+
+
+getHtml = (dom) ->
+  wrap = createElement()
+  wrap.appendChild(dom)
+  wrap.innerHTML
+
+getController = (controllerName) ->
+   require('./app/'+controllerName+'.coffee')
+
+createElement = () ->
+  doc.createElement('div')
+
+
+
+getFragments = (dom) ->
+  controllers = dom.querySelectorAll('[controller]')
+
+getControllerName = (snippet) ->
+  snippet.getAttriute('controller')
+
+getAction = (snippet) ->
+  snippet.getAttribute('action')
+

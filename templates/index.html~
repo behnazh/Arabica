@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Arabica Todo</title>
+  </head>
+  <body>
+<div></div>
+<div></div>
+<div></div>
+    <h1 arabica="TheTitle">This is the title!</h1>
+
+    <p arabica="TheDescription">lorem ipsum..</p>
+    <ul arabica="TodoList">
+      <li>ItemName</li>
+    </ul>
+
+  </body>
+</html>
